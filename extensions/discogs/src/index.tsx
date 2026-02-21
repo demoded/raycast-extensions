@@ -60,8 +60,12 @@ export default function Command() {
       ) : (
         (data?.results || []).map((item) => (
           <List.Item
+            key={item.id}
             icon={item.thumb}
             title={item.title}
+            subtitle={[item.year && String(item.year), item.catno]
+              .filter(Boolean)
+              .join(", ")}
             accessories={[
               {
                 text: item.user_data.in_collection
