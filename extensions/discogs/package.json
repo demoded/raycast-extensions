@@ -20,6 +20,24 @@
       "subtitle": "Discogs",
       "description": "Search vinyl records in the Discogs database",
       "mode": "view"
+    },
+    {
+      "name": "search-text",
+      "title": "Search for any Release",
+      "description": "Search Discogs releases by text",
+      "mode": "view"
+    },
+    {
+      "name": "search-catno",
+      "title": "Search by Catalog Number",
+      "description": "Search Discogs releases by catalog(release) number",
+      "mode": "view"
+    },
+    {
+      "name": "search-barcode",
+      "title": "Search by Barcode",
+      "description": "Search Discogs releases by barcode",
+      "mode": "view"
     }
   ],
   "preferences": [
