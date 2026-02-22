@@ -8,7 +8,7 @@ import {
   openExtensionPreferences,
 } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
-import { ApiResponse, RaycastExtPreferences } from "./types";
+import type { ApiResponse, RaycastExtPreferences } from "./types";
 
 const DISCOGS_API_URL = "https://api.discogs.com";
 const DISCOGS_WEB_URL = "https://discogs.com";

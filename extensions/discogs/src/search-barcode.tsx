@@ -2,7 +2,7 @@ import { List, Toast, showToast } from "@raycast/api";
 import { useState } from "react";
 import { discogsSearch } from "./api";
 import { ReleaseItem } from "./utils";
-import { DiscogsResult } from "./types";
+import type { DiscogsResult } from "./types";
 
 export default function Command() {
   const [results, setResults] = useState<DiscogsResult[]>([]);
@@ -32,7 +32,12 @@ export default function Command() {
   }
 
   return (
-    <List isLoading={isLoading} onSearchTextChange={onSearch} throttle searchBarPlaceholder="Barcode…">
+    <List
+      isLoading={isLoading}
+      onSearchTextChange={onSearch}
+      throttle
+      searchBarPlaceholder="Barcode…"
+    >
       {results.map((r) => (
         <ReleaseItem key={r.id} r={r} />
       ))}

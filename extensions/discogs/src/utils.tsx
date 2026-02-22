@@ -1,20 +1,32 @@
 import { Action, ActionPanel, List, Toast, showToast } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { fetchReleaseDetail } from "./api";
-import { DiscogsReleaseDetail, DiscogsResult } from "./types";
+import type { DiscogsReleaseDetail, DiscogsResult } from "./types";
 
 export function ReleaseItem({ r }: { r: DiscogsResult }) {
   return (
     <List.Item
       title={r.title}
-      subtitle={[r.year && String(r.year), r.catno, r.format?.join(", ")].filter(Boolean).join(" · ")}
+      subtitle={[r.year && String(r.year), r.catno, r.format?.join(", ")]
+        .filter(Boolean)
+        .join(" · ")}
       icon={r.cover_image}
       actions={
         <ActionPanel>
-          <Action.Push title="Show Details" target={<ReleaseDetail release={r} />} />
-          <Action.OpenInBrowser url={`https://www.discogs.com/release/${r.id}`} />
-          <Action.CopyToClipboard content={`https://www.discogs.com/release/${r.id}`} />
-          <Action.CopyToClipboard title="Copy Release ID" content={String(r.id)} />
+          <Action.Push
+            title="Show Details"
+            target={<ReleaseDetail release={r} />}
+          />
+          <Action.OpenInBrowser
+            url={`https://www.discogs.com/release/${r.id}`}
+          />
+          <Action.CopyToClipboard
+            content={`https://www.discogs.com/release/${r.id}`}
+          />
+          <Action.CopyToClipboard
+            title="Copy Release ID"
+            content={String(r.id)}
+          />
         </ActionPanel>
       }
     />
@@ -76,22 +88,41 @@ export function ReleaseDetail({ release }: { release: DiscogsResult }) {
       ? `${primaryLabelName} (${primaryLabelCatno})`
       : (primaryLabelName ?? release.label?.[0]);
   const artistValues =
-    detail?.artists?.map((artist) => artist.name?.trim()).filter((value): value is string => Boolean(value)) ?? [];
-  const artists = artistValues.length > 0 ? Array.from(new Set(artistValues)).join(" · ") : undefined;
+    detail?.artists
+      ?.map((artist) => artist.name?.trim())
+      .filter((value): value is string => Boolean(value)) ?? [];
+  const artists =
+    artistValues.length > 0
+      ? Array.from(new Set(artistValues)).join(" · ")
+      : undefined;
   const barcodeValues =
     detail?.identifiers
       ?.filter((identifier) => identifier.type?.toLowerCase() === "barcode")
       .map((identifier) => identifier.value?.trim())
       .filter((value): value is string => Boolean(value)) ?? [];
-  const barcodes = barcodeValues.length > 0 ? Array.from(new Set(barcodeValues)).join(", ") : undefined;
+  const barcodes =
+    barcodeValues.length > 0
+      ? Array.from(new Set(barcodeValues)).join(", ")
+      : undefined;
   const genreValues =
-    detail?.genres?.map((genre) => genre?.trim()).filter((value): value is string => Boolean(value)) ?? [];
-  const genres = genreValues.length > 0 ? Array.from(new Set(genreValues)).join(", ") : undefined;
+    detail?.genres
+      ?.map((genre) => genre?.trim())
+      .filter((value): value is string => Boolean(value)) ?? [];
+  const genres =
+    genreValues.length > 0
+      ? Array.from(new Set(genreValues)).join(", ")
+      : undefined;
   const styleValues =
-    detail?.styles?.map((style) => style?.trim()).filter((value): value is string => Boolean(value)) ?? [];
-  const styles = styleValues.length > 0 ? Array.from(new Set(styleValues)).join(", ") : undefined;
+    detail?.styles
+      ?.map((style) => style?.trim())
+      .filter((value): value is string => Boolean(value)) ?? [];
+  const styles =
+    styleValues.length > 0
+      ? Array.from(new Set(styleValues)).join(", ")
+      : undefined;
 
-  const discogsUrl = detail?.uri ?? `https://www.discogs.com/release/${release.id}`;
+  const discogsUrl =
+    detail?.uri ?? `https://www.discogs.com/release/${release.id}`;
 
   const rows = [
     { label: "Title", value: title },
@@ -107,18 +138,26 @@ export function ReleaseDetail({ release }: { release: DiscogsResult }) {
     { label: "Barcodes", value: barcodes },
     { label: "Resource URL", value: resourceUrl, url: resourceUrl },
     { label: "Discogs URL", value: discogsUrl, url: discogsUrl },
-  ].filter((row): row is { label: string; value: string; url?: string } => Boolean(row.value));
+  ].filter((row): row is { label: string; value: string; url?: string } =>
+    Boolean(row.value),
+  );
 
   const visibleRows = isLoading && !detail ? [] : rows;
   const showEmptyState = visibleRows.length === 0;
-  const emptyTitle = isLoading ? "Loading release details" : "No details available";
+  const emptyTitle = isLoading
+    ? "Loading release details"
+    : "No details available";
   const emptyDescription = isLoading
     ? "Fetching release info from Discogs…"
     : "Discogs did not provide extra metadata for this release.";
   const sectionTitle = detail ? "Discogs Release Details" : "Release Overview";
 
   return (
-    <List navigationTitle={`Details • ${title}`} searchBarPlaceholder="Filter release details" isLoading={isLoading}>
+    <List
+      navigationTitle={`Details • ${title}`}
+      searchBarPlaceholder="Filter release details"
+      isLoading={isLoading}
+    >
       {showEmptyState ? (
         <List.EmptyView title={emptyTitle} description={emptyDescription} />
       ) : (
@@ -130,7 +169,10 @@ export function ReleaseDetail({ release }: { release: DiscogsResult }) {
               subtitle={row.value}
               actions={
                 <ActionPanel>
-                  <Action.CopyToClipboard title={`Copy ${row.label}`} content={row.value} />
+                  <Action.CopyToClipboard
+                    title={`Copy ${row.label}`}
+                    content={row.value}
+                  />
                   {row.url && <Action.OpenInBrowser url={row.url} />}
                 </ActionPanel>
               }
