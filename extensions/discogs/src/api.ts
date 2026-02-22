@@ -5,7 +5,7 @@ const SEARCH_URL = "https://api.discogs.com/database/search";
 const USER_AGENT = "RaycastDiscogsSearch/1.0";
 
 function getDiscogsHeaders() {
-  const { token } = getPreferenceValues<{ token: string }>();
+  const { token } = getPreferenceValues<Preferences>();
   return {
     "User-Agent": USER_AGENT,
     Authorization: `Discogs token=${token}`,
