@@ -1,6 +1,6 @@
 # discogs Changelog
 
-## [Bug Fixes and quality of life improvements] - {PR_MERGE_DATE}
+## [Bug Fixes and quality of life improvements] - 2026-06-16
 - Display release date as string without timezone conversion
 - Remove catalog number from labels field, show name only
 - Deduplicate barcodes by removing spaces before comparison
